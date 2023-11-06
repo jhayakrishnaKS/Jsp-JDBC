@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="UTF-8"%>
 <html>
+<title>Todo</title>
 <body>
-<h2>Hello World!</h2>
+<%
+    session.invalidate();
+    response.sendRedirect(request.getContextPath());
+%>
 </body>
 </html>
