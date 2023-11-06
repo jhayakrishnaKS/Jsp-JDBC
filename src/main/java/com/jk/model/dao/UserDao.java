@@ -10,15 +10,14 @@ import java.sql.SQLException;
 
 public class UserDao {
     private final Connection con;
+
     public UserDao() {
 
         con = DataBase.getConnection();
     }
-
     private String selectSQL = "SELECT id, username, password FROM auth WHERE username=? and password=?";
-    private String InsertSQL="INSERT INTO auth (username, password) VALUES (?, ?)";
-
-    public User loginUser(String username, String password) throws SQLException {
+    private String RegisterSQL="INSERT INTO auth(username,password)VALUES(?,?);";
+    public User loginUser(String username, String password) {
         User user = null;
         try {
             PreparedStatement ps = con.prepareStatement(selectSQL);
@@ -36,25 +35,14 @@ public class UserDao {
         }
         return user;
     }
-
-    public User RegUser(String username, String password) throws SQLException {
-        User user = null;
+    public void register(String username, String password) {
         try {
-            System.out.println("jhayakrish");
-            PreparedStatement ps = con.prepareStatement(InsertSQL);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.executeUpdate();
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setId(Integer.parseInt(rs.getString("id")));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-            }
+            PreparedStatement rt= con.prepareStatement(RegisterSQL);
+            rt.setString(1, username);
+            rt.setString(2, password);
+            rt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return user;
     }
 }

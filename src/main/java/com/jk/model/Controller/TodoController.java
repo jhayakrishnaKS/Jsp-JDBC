@@ -1,6 +1,7 @@
 package com.jk.model.Controller;
 
 import com.jk.model.dao.TodoDao;
+import com.jk.model.dao.UserDao;
 import com.jk.model.model.Todo;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class TodoController extends HttpServlet {
-    private final TodoDao todoDao;
+    private TodoDao todoDao;
+    private UserDao userDao;
 
     public TodoController() {
         todoDao = new TodoDao();
+        userDao =new UserDao();
     }
 
     @Override
@@ -24,21 +27,20 @@ public class TodoController extends HttpServlet {
         if (id != null) {
             todoDao.deleteTodo(Integer.parseInt(id));
         }
-
         doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("todo.jsp");
-        String userId = req.getSession().getAttribute("id").toString();
+        int userId = Integer.parseInt(req.getSession().getAttribute("id").toString());
 
         String item = req.getParameter("todo");
 
-        if (item != null && item.trim().length() > 0)
-            todoDao.addTodo(item, Integer.parseInt(userId));
-
-        List<Todo> todos = todoDao.selectAllTodos(Integer.parseInt(userId));
+        if (item != null && !item.trim().isEmpty()) {
+            todoDao.addTodo(userId, item);
+        }
+        List<Todo> todos = todoDao.selectAllTodos(userId);
         req.setAttribute("todos", todos);
         dispatcher.forward(req, resp);
 
