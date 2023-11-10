@@ -1,10 +1,13 @@
 ## ToDo Application with Login and Register
 This ToDo application is a simple web-based task management system that allows users to create, update, and delete tasks. It includes user authentication with login and registration features.
 
-# User Authentication: Users can register for an account and log in securely.
-# Task Management: Authenticated users can create, edit, and delete tasks.
-# JSP and JDBC: The application is built using JavaServer Pages (JSP) for the front end and Java Database Connectivity (JDBC) for database interactions.
-Requirements
+# User Authentication: 
+Users can register for an account and log in securely.
+# Task Management:
+Authenticated users can create, edit, and delete tasks.
+# JSP and JDBC: 
+The application is built using JavaServer Pages (JSP) for the front end and Java Database Connectivity (JDBC) for database interactions.
+# Requirements
 Java Development Kit (JDK)
 Apache Tomcat Server
 MySQL Database
